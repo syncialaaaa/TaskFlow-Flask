@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Task Manager{% endblock %}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='icon.ico') }}">
+</head>
+<body id="body" class="d-flex flex-column min-vh-100 light-theme">
+    <nav class="navbar navbar-expand-lg navbar-dark app-navbar">
+        <div class="container">
+            <a class="navbar-brand" href="{{ url_for('index') }}">TaskFlow</a>
+            <div class="d-flex align-items-center ml-auto">
+                <div class="custom-control custom-switch mr-3 text-white">
+                    <input type="checkbox" class="custom-control-input" id="themeToggle">
+                    <label class="custom-control-label" for="themeToggle">Thème sombre</label>
+                </div>
+                {% if is_logged_in() %}
+                <form action="{{ url_for('logout') }}" method="post" class="mb-0">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button type="submit" class="btn btn-outline-light btn-sm">Déconnexion</button>
+                </form>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <main class="container py-4 flex-grow-1">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="text-center py-3 app-footer">
+        &copy; 2026 TaskFlow
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        const body = document.getElementById('body');
+        const themeToggle = document.getElementById('themeToggle');
+
+        if (localStorage.getItem('theme') === 'dark') {
+            body.classList.remove('light-theme');
+            body.classList.add('dark-theme');
+            themeToggle.checked = true;
+        }
+
+        themeToggle.addEventListener('change', function () {
+            body.classList.toggle('dark-theme');
+            body.classList.toggle('light-theme');
+            localStorage.setItem('theme', body.classList.contains('dark-theme') ? 'dark' : 'light');
+        });
+    </script>
+</body>
+</html>

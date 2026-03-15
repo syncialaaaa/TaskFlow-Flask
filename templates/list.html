@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ task_list.name }} - TaskFlow{% endblock %}
+
+{% block content %}
+<section class="mb-4 d-flex justify-content-between align-items-start flex-wrap">
+    <div>
+        <h1 class="mb-1">{{ task_list.name }}</h1>
+        <p class="text-muted mb-0">
+            Total: {{ tasks|length }} | Terminées: {{ tasks|selectattr('done')|list|length }} | Restantes: {{ tasks|rejectattr('done')|list|length }}
+        </p>
+    </div>
+    <a href="{{ url_for('index') }}" class="btn btn-outline-secondary mt-3 mt-md-0">Retour aux listes</a>
+</section>
+
+<section class="card p-3 shadow-sm mb-4">
+    <form action="{{ url_for('add_task', list_id=task_list.id) }}" method="post" class="form-row align-items-end">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <div class="col-md-9">
+            <label for="title" class="font-weight-bold">Nouvelle tâche</label>
+            <input
+                type="text"
+                id="title"
+                name="title"
+                class="form-control"
+                placeholder="Ex: Préparer la présentation"
+                maxlength="100"
+                required
+            >
+        </div>
+        <div class="col-md-3 mt-3 mt-md-0">
+            <button type="submit" class="btn btn-success btn-block">Ajouter</button>
+        </div>
+    </form>
+</section>
+
+<section>
+    {% if tasks %}
+        <ul class="list-unstyled mb-0">
+            {% for task in tasks %}
+                <li class="task-card card shadow-sm mb-2 {% if task.done %}task-done{% endif %}">
+                    <div class="card-body d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-items-center">
+                            <form action="{{ url_for('toggle_task', task_id=task.id) }}" method="post" class="mr-3 mb-0">
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                <button type="submit" class="btn btn-sm {% if task.done %}btn-success{% else %}btn-outline-success{% endif %}">
+                                    {% if task.done %}Terminee{% else %}A faire{% endif %}
+                                </button>
+                            </form>
+                            <span class="task-title {% if task.done %}text-muted{% endif %}">{{ task.title }}</span>
+                        </div>
+                        <form action="{{ url_for('remove_task', task_id=task.id) }}" method="post" class="mb-0" onsubmit="return confirm('Supprimer cette tâche ?');">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                            <button type="submit" class="btn btn-outline-danger btn-sm">Supprimer</button>
+                        </form>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <div class="alert alert-info mb-0">Aucune tâche pour cette liste. Ajoute-en une pour commencer.</div>
+    {% endif %}
+</section>
+{% endblock %}

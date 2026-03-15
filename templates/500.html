@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}Erreur serveur - TaskFlow{% endblock %}
+
+{% block content %}
+<div class="text-center py-5">
+    <h1 class="display-4 mb-3">500</h1>
+    <p class="lead">Une erreur serveur est survenue.</p>
+    <a href="{{ url_for('index') }}" class="btn btn-primary mt-2">Retour a l'accueil</a>
+</div>
+{% endblock %}

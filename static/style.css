@@ -1,0 +1,123 @@
+:root {
+    --bg: #f3f6fb;
+    --surface: #ffffff;
+    --surface-2: #f8fafc;
+    --text: #1f2937;
+    --muted: #6b7280;
+    --accent: #116466;
+    --accent-soft: #d7f0ef;
+    --border: #dbe4ee;
+    --success-soft: #def7e8;
+}
+
+body {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background: radial-gradient(circle at top right, #e8f3ff 0%, var(--bg) 45%, #edf3f8 100%);
+    color: var(--text);
+}
+
+.app-navbar {
+    background: linear-gradient(90deg, #0d3b66 0%, #116466 100%);
+    box-shadow: 0 8px 20px rgba(9, 25, 48, 0.2);
+}
+
+.navbar-brand {
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.app-footer {
+    background-color: #0d3b66;
+    color: #e8eef7;
+}
+
+.card {
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background-color: var(--surface);
+}
+
+.list-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.list-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(26, 52, 94, 0.14);
+}
+
+.task-card {
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background-color: var(--surface);
+}
+
+.task-done {
+    background-color: var(--success-soft);
+}
+
+.task-title {
+    font-weight: 500;
+}
+
+.auth-card {
+    margin-top: 4rem;
+}
+
+.text-muted {
+    color: var(--muted) !important;
+}
+
+body.dark-theme {
+    --bg: #101820;
+    --surface: #192532;
+    --surface-2: #1e2f41;
+    --text: #e7f1ff;
+    --muted: #afc0d2;
+    --accent: #27a8a2;
+    --accent-soft: #1f3f47;
+    --border: #2f4359;
+    --success-soft: #1b4b3d;
+    background: radial-gradient(circle at top right, #1d2b3a 0%, var(--bg) 50%, #0b131b 100%);
+}
+
+body.dark-theme .app-navbar {
+    background: linear-gradient(90deg, #0b223f 0%, #0e4c57 100%);
+}
+
+body.dark-theme .app-footer {
+    background-color: #0b223f;
+    color: #d7e4f5;
+}
+
+body.dark-theme .form-control {
+    background-color: #172430;
+    border-color: var(--border);
+    color: var(--text);
+}
+
+body.dark-theme .form-control:focus {
+    background-color: #172430;
+    color: var(--text);
+}
+
+body.dark-theme .btn-outline-secondary {
+    color: #dce6f3;
+    border-color: #8aa1bc;
+}
+
+body.dark-theme .alert-info {
+    color: #d8ecff;
+    background-color: #22405d;
+    border-color: #31577d;
+}
+
+@media (max-width: 768px) {
+    .auth-card {
+        margin-top: 1rem;
+    }
+
+    .custom-switch {
+        margin-right: 0.5rem;
+    }
+}

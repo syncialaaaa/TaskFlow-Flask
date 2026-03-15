@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Connexion - TaskFlow{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-4">
+        <div class="card shadow-sm p-4 auth-card">
+            <h1 class="h3 text-center mb-4">Connexion</h1>
+            <form method="post">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <div class="form-group">
+                    <label for="username">Nom utilisateur</label>
+                    <input type="text" id="username" name="username" class="form-control" minlength="3" maxlength="30" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Mot de passe</label>
+                    <input type="password" id="password" name="password" class="form-control" minlength="8" required>
+                </div>
+                <button type="submit" class="btn btn-success btn-block">Se connecter</button>
+            </form>
+            <p class="text-center mt-3 mb-0">Pas encore inscrit ? <a href="{{ url_for('register') }}">Creer un compte</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}
